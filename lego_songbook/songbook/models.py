@@ -7,8 +7,8 @@ class Song(models.Model):
     """"""
 
     name = models.CharField(max_length=30)
-    key = models.CharField(max_length=3)
-    sheet_type = models.CharField(max_length=4)
+    key = models.CharField(max_length=3, null=True)
+    sheet_type = models.CharField(max_length=4, null=True)
 
     def __str__(self):
         return self.name
