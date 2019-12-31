@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's-vkis7q+0yr=2_crxr+b8^iwvi*ctv^jh$6_ijyu+49c4&eyf'
+SECRET_KEY = '5-)c$cap$ey8*=a*ds4rdw7=jrba=u!z$hxc)m3rn16g1eop6h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "songbook.apps.SongbookConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
