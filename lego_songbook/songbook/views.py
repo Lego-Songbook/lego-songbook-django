@@ -6,6 +6,7 @@ from .models import Song, Setlist
 
 # Create your views here.
 
+
 def index(request):
     return HttpResponse("Hello World.")
 
@@ -25,8 +26,12 @@ class SongDetailView(generic.DetailView):
 
 
 class SetlistView(generic.ListView):
-    template_name = "songbook/index.html"
+    template_name = "songbook/setlist_list.html"
     context_object_name = "setlist_list"
+
+    def get_queryset(self):
+        """Return the list of all songs."""
+        return Setlist.objects.order_by("date")
 
 
 class SetlistDetailView(generic.DetailView):

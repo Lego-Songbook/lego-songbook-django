@@ -11,12 +11,12 @@
 
   <title>
     
-      所有音乐 &middot; Lego Songbook
+      敬拜安排 &middot; Lego Songbook
     
   </title>
 
   <!-- CSS -->
-      {% load static %}
+    {% load static %}
   <link rel="stylesheet" href="{% static 'songbook/css/poole.css' %}">
   <link rel="stylesheet" href="{% static 'songbook/css/syntax.css' %}">
   <link rel="stylesheet" href="{% static 'songbook/css/hyde.css' %}">
@@ -65,9 +65,8 @@
     <nav class="sidebar-nav">
       <a class="sidebar-nav-item" href="/lego-songbook/">Home</a>
 
-            <a class="sidebar-nav-item" href="/lego-songbook/all-songs-by-name/">所有音乐</a>
 
-            <a class="sidebar-nav-item" href="/lego-songbook/services/">敬拜安排</a>
+            <a class="sidebar-nav-item active" href="/lego-songbook/services/">敬拜安排</a>
 
       <!-- <a class="sidebar-nav-item" href="/archive/v2019.12.3.zip">Download</a> -->
       <!-- <a class="sidebar-nav-item" href="">GitHub project</a> -->
@@ -81,28 +80,31 @@
 
     <div class="content container">
       <div class="page">
-  <h1 class="page-title">所有音乐</h1>
-  
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center"><a href="/lego-songbook/all-songs-by-name/">名称</a></th>
-      <th style="text-align: center"><a href="/lego-songbook/all-songs-by-key/">曲调</a></th>
-      <th style="text-align: center">歌谱</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for song in song_list %}
-    <tr>
-      <td style="text-align: center">{{ song.name }}</td>
-      <td style="text-align: center">{{ song.key }}</td>
-      <td style="text-align: center"><a href="http://q2rlew7xm.bkt.clouddn.com/%E6%B1%82%E4%B8%BB%E5%80%9F%E5%BC%82%E8%B1%A1%E6%84%9F%E5%8A%A8%E6%88%91.">{{ song.sheet_type}}</a></td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+  <h1 class="page-title">敬拜安排</h1>
 
+        {% for setlist in setlist_list %}
+<h3 id="2019-12-29"><a href="/lego-songbook/services/2019-12-29.html">{{ setlist.date }}</a></h3>
 
+<ul>
+  <li>带领：{{ setlist.worship_leader }}</li>
+  <li>乐器：
+    <ul>
+      <li>键盘：翔哥</li>
+      <li>吉他：载恩</li>
+      <li>鼓：颐天</li>
+    </ul>
+  </li>
+  <li>曲目：
+    <ul>
+      {% if setlist.songs.all %}
+        {% for song in setlist.songs.all %}
+        <li><a href="http://q2rlew7xm.bkt.clouddn.com/%E6%88%91%E4%BB%AC%E7%88%B1%E6%88%B4%E7%9A%84%E7%8E%8B.pdf">{{ song.name }}</a></li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </li>
+</ul>
+        {% endfor %}
 </div>
 
     </div>
