@@ -6,9 +6,9 @@ from django.db import models
 class Song(models.Model):
     """"""
 
-    name = models.CharField(max_length=30)
-    key = models.CharField(max_length=3, null=True)
-    sheet_type = models.CharField(max_length=4, null=True)
+    name = models.CharField(max_length=30, unique=True)
+    key = models.CharField(max_length=3, unique=True, null=True)
+    sheet_type = models.CharField(max_length=4, unique=True, null=True)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,22 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'songbook/style.css' %}">
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Key</th>
+            <th>Sheet</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for song in song_list %}
+        <tr>
+            <td>{{ song.name }}</td>
+            <td>{{ song.key }}</td>
+            <td>{{ song.sheet_type | upper }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
