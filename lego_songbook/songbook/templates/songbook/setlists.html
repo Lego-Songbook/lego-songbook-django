@@ -1,0 +1,27 @@
+{% extends 'songbook/base.html' %}
+
+{% block content %}
+  {% for setlist in setlist_list %}
+    <h3 id="2019-12-29"><a href="/lego-songbook/services/2019-12-29.html">{{ setlist.date }}</a></h3>
+
+    <ul>
+      <li>带领：{{ setlist.worship_leader }}</li>
+      <li>乐器：
+        <ul>
+          <li>键盘：翔哥</li>
+          <li>吉他：载恩</li>
+          <li>鼓：颐天</li>
+        </ul>
+      </li>
+      <li>曲目：
+        <ul>
+          {% if setlist.songs.all %}
+            {% for song in setlist.songs.all %}
+            <li><a href="http://q2rlew7xm.bkt.clouddn.com/%E6%88%91%E4%BB%AC%E7%88%B1%E6%88%B4%E7%9A%84%E7%8E%8B.pdf">{{ song.name }}</a></li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </li>
+    </ul>
+  {% endfor %}
+{% endblock content %}

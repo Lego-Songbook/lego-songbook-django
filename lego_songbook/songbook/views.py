@@ -12,7 +12,7 @@ def index(request):
 
 
 class SongView(generic.ListView):
-    template_name = "songbook/song_list.html"
+    template_name = "songbook/songs.html"
     context_object_name = "song_list"
 
     def get_queryset(self):
@@ -26,7 +26,7 @@ class SongDetailView(generic.DetailView):
 
 
 class SetlistView(generic.ListView):
-    template_name = "songbook/setlist_list.html"
+    template_name = "songbook/setlists.html"
     context_object_name = "setlist_list"
 
     def get_queryset(self):
