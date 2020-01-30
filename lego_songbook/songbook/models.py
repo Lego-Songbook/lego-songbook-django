@@ -1,7 +1,19 @@
+"""
+Songbook models.
+
+A ``Song`` has a name, a key, and a sheet type (PDF, PNG, JPG, etc).
+
+A ``Setlist`` is basically a list of songs of a particular worship
+session. It also has a date, a worship leader, and an instrumentation
+of that worship session.
+
+"""
+
 from django.db import models
 
 
 class SongManager(models.Manager):
+    """Make 'name' and 'key' combined unique."""
     def get_by_natural_key(self, name, key):
         return self.get(name=name, key=key)
 
@@ -53,7 +65,7 @@ class Instrumentation(models.Model):
     objects = InstrumentationManager()
 
     def __str__(self):
-        return f'{self.instrument} {self.player}'
+        return f'{self.instrument}: {self.player}'
 
     def natural_key(self):
         return self.instrument, self.player

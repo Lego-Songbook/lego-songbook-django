@@ -1,8 +1,10 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
+from django_tables2 import SingleTableView
 
 from .models import Song, Setlist
+from .tables import SongTable
+
 
 # Create your views here.
 
@@ -11,7 +13,9 @@ def index(request):
     return HttpResponse("Hello World.")
 
 
-class SongView(generic.ListView):
+class SongView(SingleTableView):
+    model = Song
+    table_class = SongTable
     template_name = "songbook/songs.html"
     context_object_name = "song_list"
 

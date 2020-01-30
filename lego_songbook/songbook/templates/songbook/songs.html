@@ -1,27 +1,30 @@
 {% extends "songbook/base.html" %}
+{% load render_table from django_tables2 %}
 
 {% block content %}
 <div class="page">
   <h1 class="page-title">所有音乐</h1>
-  
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center"><a href="/songbook/songs/">名称</a></th>
-      <th style="text-align: center"><a href="/songbook/songs/">曲调</a></th>
-      <th style="text-align: center">歌谱</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for song in song_list %}
-    <tr>
-      <td style="text-align: center">{{ song.name }}</td>
-      <td style="text-align: center">{{ song.key }}</td>
-      <td style="text-align: center"><a href="http://q2rlew7xm.bkt.clouddn.com/%E6%B1%82%E4%B8%BB%E5%80%9F%E5%BC%82%E8%B1%A1%E6%84%9F%E5%8A%A8%E6%88%91.">{{ song.sheet_type}}</a></td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+
+  {% render_table table %}
+
+<!--<table>-->
+<!--  <thead>-->
+<!--    <tr>-->
+<!--      <th style="text-align: center"><a href="/songbook/songs/">名称</a></th>-->
+<!--      <th style="text-align: center"><a href="/songbook/songs/">曲调</a></th>-->
+<!--      <th style="text-align: center">歌谱</th>-->
+<!--    </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--  {% for song in song_list %}-->
+<!--    <tr>-->
+<!--      <td style="text-align: center">{{ song.name }}</td>-->
+<!--      <td style="text-align: center">{{ song.key }}</td>-->
+<!--      <td style="text-align: center"><a href="http://q2rlew7xm.bkt.clouddn.com/%E6%B1%82%E4%B8%BB%E5%80%9F%E5%BC%82%E8%B1%A1%E6%84%9F%E5%8A%A8%E6%88%91.">{{ song.sheet_type}}</a></td>-->
+<!--    </tr>-->
+<!--  {% endfor %}-->
+<!--  </tbody>-->
+<!--</table>-->
 
 
 </div>
