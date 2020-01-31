@@ -7,26 +7,41 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Song',
+            name="Song",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30)),
-                ('key', models.CharField(max_length=3)),
-                ('sheet_type', models.CharField(max_length=4)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=30)),
+                ("key", models.CharField(max_length=3)),
+                ("sheet_type", models.CharField(max_length=4)),
             ],
         ),
         migrations.CreateModel(
-            name='Setlist',
+            name="Setlist",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('worship_leader', models.CharField(max_length=30)),
-                ('songs', models.ManyToManyField(to='songbook.Song')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("worship_leader", models.CharField(max_length=30)),
+                ("songs", models.ManyToManyField(to="songbook.Song")),
             ],
         ),
     ]
