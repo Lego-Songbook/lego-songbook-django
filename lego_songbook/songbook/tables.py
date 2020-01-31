@@ -1,8 +1,10 @@
 import django_tables2 as tables
+
+from .models import Song
+
 # from django.db.models import F
 # from pypinyin import lazy_pinyin
 
-from .models import Song
 
 
 class SongTable(tables.Table):
