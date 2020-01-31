@@ -6,7 +6,6 @@ from .models import Song
 # from pypinyin import lazy_pinyin
 
 
-
 class SongTable(tables.Table):
     sheet_type = tables.Column(orderable=False)
 

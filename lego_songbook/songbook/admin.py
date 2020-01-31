@@ -85,8 +85,11 @@ class PlanAdmin(admin.ModelAdmin):
 
 @admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
-    fields = ("name", "key", "sheet_type")
-    readonly_fields = ("arrangements",)
+    fields = (
+        "name",
+        "key",
+    )
+    readonly_fields = ("song_arrangements",)
 
 
 admin.site.register(SongArrangement)

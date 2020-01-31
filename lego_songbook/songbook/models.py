@@ -168,7 +168,7 @@ class TeamArrangement(models.Model):
     """
 
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    position_arrangements = models.ManyToManyField(
+    position_assignments = models.ManyToManyField(
         to=PositionAssignment, related_name="team_arrangements",
     )
 
@@ -207,7 +207,7 @@ class SongArrangement(models.Model):
 
     title = models.CharField(max_length=100, default="Default Arrangement")
     song = models.ForeignKey(
-        Song, on_delete=models.CASCADE, related_name="arrangements"
+        Song, on_delete=models.CASCADE, related_name="song_arrangements"
     )
     key = models.CharField(max_length=10, null=True, blank=True)
     length = models.CharField(max_length=20, null=True, blank=True)
@@ -233,7 +233,7 @@ class Plan(models.Model):
     date = models.DateField()
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE, null=True)
     song_arrangements = models.ManyToManyField(SongArrangement, related_name="plans")
-    team_arrangement = models.ManyToManyField(PositionAssignment, related_name="plans")
+    team_arrangement = models.ManyToManyField(TeamArrangement, related_name="plans")
 
     def __str__(self):
         return f"{self.service_type} ({self.date})"
