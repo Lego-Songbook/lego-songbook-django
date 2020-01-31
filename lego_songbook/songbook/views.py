@@ -2,9 +2,8 @@ from django.http import HttpResponse
 from django.views import generic
 from django_tables2 import SingleTableView
 
-from .models import Song, Setlist
+from .models import Setlist, Song
 from .tables import SongTable
-
 
 # Create your views here.
 
