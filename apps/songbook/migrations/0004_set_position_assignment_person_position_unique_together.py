@@ -6,21 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('songbook', '0003_alter_team_servicetype_non_blank'),
+        ("songbook", "0003_alter_team_servicetype_non_blank"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='positionassignment',
-            name='status',
-            field=models.CharField(choices=[('confirmed', 'Confirmed'), ('unconfirmed', 'Unconfirmed'), ('declined', 'Declined')], default='unconfirmed', max_length=16),
+            model_name="positionassignment",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("confirmed", "Confirmed"),
+                    ("unconfirmed", "Unconfirmed"),
+                    ("declined", "Declined"),
+                ],
+                default="unconfirmed",
+                max_length=16,
+            ),
         ),
-        migrations.AlterUniqueTogether(
-            name='song',
-            unique_together=set(),
-        ),
+        migrations.AlterUniqueTogether(name="song", unique_together=set(),),
         migrations.AddConstraint(
-            model_name='positionassignment',
-            constraint=models.UniqueConstraint(fields=('position', 'person'), name='unique_assignment'),
+            model_name="positionassignment",
+            constraint=models.UniqueConstraint(
+                fields=("position", "person"), name="unique_assignment"
+            ),
         ),
     ]

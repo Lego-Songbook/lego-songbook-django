@@ -58,10 +58,7 @@ class Team(models.Model):
 
     name = models.CharField(max_length=50)
     service_type = models.ForeignKey(
-        ServiceType,
-        on_delete=models.CASCADE,
-        related_name="teams",
-        null=True,
+        ServiceType, on_delete=models.CASCADE, related_name="teams", null=True,
     )
 
     def __str__(self):
@@ -148,27 +145,26 @@ class PositionAssignment(models.Model):  # Need a better name.
     A particular combination of a position and a person. This model
     is used in ``Plan`` model.
     """
+
     class AssignmentStatus(models.TextChoices):
-        CONFIRMED = 'confirmed', 'Confirmed'
-        UNCONFIRMED = 'unconfirmed', 'Unconfirmed'
-        DECLINED = 'declined', 'Declined'
+        CONFIRMED = "confirmed", "Confirmed"
+        UNCONFIRMED = "unconfirmed", "Unconfirmed"
+        DECLINED = "declined", "Declined"
 
     status = models.CharField(
         max_length=16,
         default=AssignmentStatus.UNCONFIRMED,
         choices=AssignmentStatus.choices,
     )
-    position = models.ForeignKey(
-        Position,
-        on_delete=models.CASCADE,
-    )
+    position = models.ForeignKey(Position, on_delete=models.CASCADE,)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     class Meta:
-        constraints = [models.UniqueConstraint(
-            fields=['position', 'person'],
-            name='unique_assignment',
-        )]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["position", "person"], name="unique_assignment",
+            )
+        ]
 
     def __str__(self):
         return f"{self.position}: {self.person}"

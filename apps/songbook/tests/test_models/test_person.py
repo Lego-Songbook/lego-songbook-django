@@ -1,8 +1,8 @@
+from datetime import date
+
 import pytest
 
 from ...models import Person
-
-from datetime import date
 
 django_db = pytest.mark.django_db
 

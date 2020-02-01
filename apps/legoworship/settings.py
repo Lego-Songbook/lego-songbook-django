@@ -116,4 +116,4 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-TEST_RUNNER = 'songbook.runner.PytestTestRunner'
+TEST_RUNNER = "songbook.runner.PytestTestRunner"

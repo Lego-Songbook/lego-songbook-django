@@ -21,17 +21,17 @@ def test_get_all_positions_of_a_person():
 
 @django_db
 def test_default_status():
-    p = Person.objects.create(first_name='John')
-    pos = Position.objects.create(name='Guitarist')
+    p = Person.objects.create(first_name="John")
+    pos = Position.objects.create(name="Guitarist")
     pos_assign = PositionAssignment.objects.create(position=pos, person=p)
 
-    assert pos_assign.status == 'unconfirmed'
+    assert pos_assign.status == "unconfirmed"
 
 
 @django_db
 def test_person_position_unique_together():
-    p = Person.objects.create(first_name='John')
-    pos = Position.objects.create(name='Guitarist')
+    p = Person.objects.create(first_name="John")
+    pos = Position.objects.create(name="Guitarist")
     PositionAssignment.objects.create(position=pos, person=p)
 
     with pytest.raises(IntegrityError):

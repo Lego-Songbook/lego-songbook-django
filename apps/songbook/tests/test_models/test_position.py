@@ -1,6 +1,6 @@
 import pytest
 
-from ...models import Team, Position, Person
+from ...models import Person, Position, Team
 
 django_db = pytest.mark.django_db
 

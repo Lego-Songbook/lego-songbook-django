@@ -20,7 +20,7 @@ coverage = "^5.0.3"
 tox = "^3.14.3"
 
 [tool.black]
-py36 = true
+target-version = "py36"
 skip-numeric-underscore-normalization = true
 
 [tool.isort]
