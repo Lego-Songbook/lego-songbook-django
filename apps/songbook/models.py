@@ -62,7 +62,6 @@ class Team(models.Model):
         on_delete=models.CASCADE,
         related_name="teams",
         null=True,
-        blank=True,
     )
 
     def __str__(self):
@@ -132,10 +131,10 @@ class Position(models.Model):
     """
 
     name = models.CharField(max_length=50)
-    people = models.ManyToManyField(Person, related_name="positions", blank=True)
     team = models.ForeignKey(
-        Team, related_name="positions", on_delete=models.CASCADE, null=True, blank=True
+        Team, related_name="positions", on_delete=models.CASCADE, null=True
     )
+    people = models.ManyToManyField(Person, related_name="positions", blank=True)
 
     def __str__(self):
         if self.team is None:
@@ -149,14 +148,27 @@ class PositionAssignment(models.Model):  # Need a better name.
     A particular combination of a position and a person. This model
     is used in ``Plan`` model.
     """
+    class AssignmentStatus(models.TextChoices):
+        CONFIRMED = 'confirmed', 'Confirmed'
+        UNCONFIRMED = 'unconfirmed', 'Unconfirmed'
+        DECLINED = 'declined', 'Declined'
 
-    status = models.CharField(max_length=20, default="confirmed")
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    status = models.CharField(
+        max_length=16,
+        default=AssignmentStatus.UNCONFIRMED,
+        choices=AssignmentStatus.choices,
+    )
     position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
-        # limit_choices_to={'person': Q(person__position=)},
     )
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(
+            fields=['position', 'person'],
+            name='unique_assignment',
+        )]
 
     def __str__(self):
         return f"{self.position}: {self.person}"
@@ -189,9 +201,6 @@ class Song(models.Model):
     original_key = models.CharField(max_length=3, null=True, blank=True)
     # sheet_type = models.CharField(max_length=4, null=True, blank=True)
     objects = SongManager()
-
-    class Meta:
-        unique_together = [["name", "original_key"]]
 
     def __str__(self):
         return self.name
