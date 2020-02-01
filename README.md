@@ -1,6 +1,6 @@
-# lego-songbook-django
+# legoworship.life
 I'm experimenting to use django as the backend to
-[Lego Songbook](https://kipyin.github.io/lego-songbook/).
+Lego Songbook.
 It may or may not work.
 
 Using django comes with lots of benefits:
