@@ -13,7 +13,7 @@ class SongTable(tables.Table):
         model = Song
         # template_name = "django_tables2/bootstrap.html"
         fields = ("name", "key", "sheet_type")
-        attrs = {"td": {"style": "text-align: center"}}
+        attrs = {"td": {"style": "text-align: left"}}
 
     # def order_name(self, queryset, is_descending):
     #     """Order the name column by its pinyin."""
