@@ -1,21 +1,17 @@
 from django.contrib import admin
 
-from .models import (
+from songbook.models import (
     Person,
     Plan,
     Position,
     PositionAssignment,
+    ServiceType,
     Setlist,
     Song,
     SongArrangement,
-    Team
+    Team,
+    TeamArrangement,
 )
-
-# class SongbookAdminSite(admin.AdminSite):
-#     site_header = "乐高曲库管理中心"
-#
-#
-# admin_site = SongbookAdminSite(name="admin")
 
 
 class PositionInline(admin.TabularInline):
@@ -26,14 +22,10 @@ class PositionInline(admin.TabularInline):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    # fields = ('name', 'positions')
-    # filter_horizontal = ('positions',)
     inlines = [PositionInline]
-    # filter_horizontal = ('positions',)
     search_fields = (
         "positions__people__first_name",
         "positions__people__last_name",
-        # 'positions__people__nickname',
         "positions__name",
     )
 
@@ -42,18 +34,11 @@ class TeamAdmin(admin.ModelAdmin):
 class PersonAdmin(admin.ModelAdmin):
     readonly_fields = ("age", "all_positions")
     list_display = ("full_name", "all_positions")
-    # list_display_links = ('all_positions',)
 
     def all_positions(self, obj):
         return " | ".join([str(x) for x in obj.positions.all()])
 
     all_positions.short_description = "POSITIONS"
-
-
-# @admin.register(Position)
-# class PositionAdmin(admin.ModelAdmin):
-#     fields = ('name', 'people', 'team')
-#     filter_horizontal = ('people',)
 
 
 class PlanArrangementThroughInline(admin.StackedInline):
@@ -68,10 +53,8 @@ class PersonSchedulePlanThroughInline(admin.StackedInline):
 
 @admin.register(Plan)
 class PlanAdmin(admin.ModelAdmin):
-    # fields = ('name', 'people', 'team')
     inlines = [PlanArrangementThroughInline, PersonSchedulePlanThroughInline]
-    # filter_horizontal = ('arrangements', 'people')
-    exclude = ("arrangements", "people")
+    exclude = ("song_arrangements", "team_arrangement")
     list_display = ("date", "worship_leader", "all_songs")
 
     def worship_leader(self, obj: Plan):
@@ -87,11 +70,32 @@ class PlanAdmin(admin.ModelAdmin):
 class SongAdmin(admin.ModelAdmin):
     fields = (
         "name",
-        "key",
+        "original_key",
     )
     readonly_fields = ("song_arrangements",)
 
 
+@admin.register(PositionAssignment)
+class PositionAssignmentAdmin(admin.ModelAdmin):
+    pass
+
+
+class TeamArrangementPositionAssignmentThroughInline(admin.TabularInline):
+    model = TeamArrangement.position_assignments.through
+    extra = 0
+
+
+@admin.register(TeamArrangement)
+class TeamArrangementAdmin(admin.ModelAdmin):
+    inlines = [TeamArrangementPositionAssignmentThroughInline]
+    exclude = ("position_assignments",)
+
+
 admin.site.register(SongArrangement)
 admin.site.register(Setlist)
-admin.site.register(PositionAssignment)
+admin.site.register(ServiceType)
+admin.site.register(Position)
+admin.site.site_header = "Lego Worship Administration"
+admin.site.site_title = "Lego Worship Administration"
+admin.site.index_title = "Site Admin"
+admin.site.site_url = "/songbook"
