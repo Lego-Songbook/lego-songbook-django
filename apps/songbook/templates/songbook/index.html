@@ -1,5 +1,5 @@
 {% extends "songbook/base.html" %}
-
+{% load static %}
 {% block content %}
 
 <section class="posts">
@@ -7,9 +7,10 @@
         <header>
 <!--            <span class="date">April 24, 2017</span>-->
             <h2><a href="/songbook/setlists/">Worship Plans</a></h2>
+<!--            <span class="date">View all worship plans</span>-->
         </header>
-<!--        <a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>-->
-        <p>View all worship plans.</p>
+        <a href="/songbook/setlists/" class="image fit"><img src="{% static 'songbook/images/pic02.jpg' %}" alt="" /></a>
+<!--        <p>View all worship plans.</p>-->
 <!--        <ul class="actions special">-->
 <!--            <li><a href="#" class="button">View</a></li>-->
 <!--        </ul>-->
@@ -19,8 +20,8 @@
 <!--            <span class="date">April 22, 2017</span>-->
             <h2><a href="/songbook/songs/">Song Library</a></h2>
         </header>
-<!--        <a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>-->
-        <p>Browse all the songs we have sung.</p>
+        <a href="/songbook/songs/" class="image fit"><img src="{% static 'songbook/images/pic03.jpg' %}" alt="" /></a>
+<!--        <p>Browse all the songs we have sung.</p>-->
 <!--        <ul class="actions special">-->
 <!--            <li><a href="#" class="button">View</a></li>-->
 <!--        </ul>-->
