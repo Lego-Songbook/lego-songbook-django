@@ -269,3 +269,4 @@ fabric.properties
 .idea
 .venv
 .vscode
+/html-templates/
