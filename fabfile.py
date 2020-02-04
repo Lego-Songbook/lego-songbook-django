@@ -14,16 +14,19 @@ SOURCE_FOLDER = "/root/sites/legoworship.life"
 
 def deploy():
     """Automate the deployment process."""
+    services = ['gunicorn.socket', 'gunicorn.service', 'nginx']
 
     c = Connection(host=HOST, user=USER, port=PORT, connect_kwargs={
         'password':
             PASSWORD
     })
     c.cd(f'{SOURCE_FOLDER}/apps')
+    for service in services:
+        c.run(f'systemctl stop {service}')
     c.run('git pull')
+    c.run('source $HOME/.poetry/env')
     c.run('poetry shell')
     c.run('poetry install')
-    c.run('python manage.py collectstatic --noinput && python manage.py migrate')
-    c.run('systemctl stop gunicorn.socket && systemctl start gunicorn.socket')
-    for service in ['gunicorn.service', 'nginx']:
-        c.run(f'systemctl reload {service}')
+    c.run('python manage.py collectstatic --noinput & python manage.py migrate')
+    for service in services:
+        c.run(f'systemctl start {service}')
