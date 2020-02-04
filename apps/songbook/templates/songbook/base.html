@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	{% include "songbook/includes/head.html" %}
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="{% if request.path == '/songbook/' %}fade-in{% endif %}">
+
+				<!-- Intro -->
+					{% if request.path == '/songbook/' %}
+						{% include 'songbook/includes/intro.html' %}
+					{% endif %}
+
+				<!-- Head & Nav -->
+                {% include "songbook/includes/navigation.html" %}
+
+				<!-- Main -->
+					<div id="main">
+                        {% block content %}{% endblock %}
+					</div>
+				<!-- Footer & Copyright -->
+				{% include "songbook/includes/footer.html" %}
+			</div>
+			{% include 'songbook/includes/scripts.html' %}
+	</body>
+</html>

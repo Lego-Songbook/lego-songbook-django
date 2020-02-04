@@ -269,3 +269,5 @@ fabric.properties
 .idea
 .venv
 .vscode
+/html-templates/
+/affinity-photo/

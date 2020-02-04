@@ -1,15 +1,37 @@
 [tool.poetry]
-name = "lego-songbook-django"
-version = "v2019.12.0"
+name = "legoworship"
+version = "v20.1.0"
 description = ""
 authors = ["Kip Yin <28321392+kipyin@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6"
 django = "^3.0.1"
+django-tables2 = "^2.2.1"
+pypinyin = "^0.36.0"
 
 [tool.poetry.dev-dependencies]
+pytest = "^5.3.5"
+black = "^19.10b0"
+isort = "^4.3.21"
+pytest-django = "^3.8.0"
+coverage = "^5.0.3"
+tox = "^3.14.3"
+
+[tool.black]
+skip-numeric-underscore-normalization = true
+
+[tool.isort]
+multi_line_output = 3
+use_parentheses = true
+known_first_party = ["legoworship", "songbook"]
+known_third_party = ["django", "django_tables2"]
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+default = true
 
 [build-system]
 requires = ["poetry>=0.12"]
