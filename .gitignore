@@ -270,3 +270,4 @@ fabric.properties
 .venv
 .vscode
 /html-templates/
+/affinity-photo/
