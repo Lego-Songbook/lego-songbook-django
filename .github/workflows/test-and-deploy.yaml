@@ -22,9 +22,9 @@ jobs:
           
       - name: Test
         run: |
-          mkdir -p /home/runner/.cache/pypoetry/virtualenvs
+#          mkdir -p /home/runner/.cache/pypoetry/virtualenvs
           source $HOME/.poetry/env
-          poetry run tox
+          poetry run tox -v
           
       - name: Deploy
         if: ${{ github.ref }} == 'master'
