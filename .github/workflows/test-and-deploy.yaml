@@ -21,6 +21,7 @@ jobs:
           
       - name: Test
         run: |
+          ls /home/runner/.cache/pypoetry/
           source $HOME/.poetry/env
           poetry run tox
           
