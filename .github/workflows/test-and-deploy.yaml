@@ -19,7 +19,6 @@ jobs:
 
       - name: Install Poetry
         run: |
-          echo '${{ github.ref }}'
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 
       - name: Install dependencies
@@ -38,7 +37,7 @@ jobs:
           poetry run tox -e py36
           
       - name: Deploy
-        if: github.ref == 'master'
+        if: github.ref == 'refs/heads/master'
         env:
           LW_HOST: ${{ secrets.LWHost }}
           LW_USER: ${{ secrets.LWUser }}
