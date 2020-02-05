@@ -22,7 +22,7 @@ jobs:
           
       - name: Test
         run: |
-          mkdir /home/runner/.cache/pypoetry/
+          mkdir -p /home/runner/.cache/pypoetry/virtualenvs
           source $HOME/.poetry/env
           poetry run tox
           
