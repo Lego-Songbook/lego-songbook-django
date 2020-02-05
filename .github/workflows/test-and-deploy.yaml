@@ -15,6 +15,7 @@ jobs:
           
       - name: Build and Test
         run: |
+          ls -alt
           source $HOME/.poetry/env
           poetry install -v
           poetry run pytest
