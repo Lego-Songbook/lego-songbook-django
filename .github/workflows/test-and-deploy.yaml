@@ -23,9 +23,8 @@ jobs:
       - name: Test
         run: |
           source $HOME/.poetry/env
-          poetry debug
-          ls
-          poetry run tox -v
+          poetry install -v
+          poetry run tox
           
       - name: Deploy
         if: ${{ github.ref }} == 'master'
