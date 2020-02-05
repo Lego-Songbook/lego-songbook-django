@@ -10,13 +10,16 @@ jobs:
     runs-on: [ubuntu-18.04]
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
       - name: Install Poetry
         run: |
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
           
       - name: Build and Test
         run: |
-          ls -alt
           source $HOME/.poetry/env
           poetry install -v
           poetry run pytest
