@@ -22,7 +22,6 @@ jobs:
           
       - name: Test
         run: |
-#          mkdir -p /home/runner/.cache/pypoetry/virtualenvs
           source $HOME/.poetry/env
           poetry run tox -v
           
