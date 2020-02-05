@@ -21,7 +21,7 @@ jobs:
       - name: Test
         run: |
           source $HOME/.poetry/env
-          tox
+          poetry run tox
           
       - name: Deploy
         env:
