@@ -1,0 +1,28 @@
+name: Test and Deploy
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  test:
+    name: Test and Deploy
+    runs-on: [ubuntu-18.04]
+    steps:
+      - name: Install Poetry
+        run: |
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+          source $HOME/.poetry/env
+          
+      - name: Build and Test
+        run: |
+          poetry install -v
+          poetry run pytest
+          
+      - name: Deploy
+        env:
+          LW_HOST: ${{ secrets.LWHost }}
+          LW_USER: ${{ secrets.LWUser }}
+          LW_PASSWORD: ${{ secrets.LWPassword }}
+          LW_PORT: ${{ secrets.LWPort }}
+        run: poetry run fab $LW_HOST deploy
