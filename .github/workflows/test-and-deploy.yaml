@@ -37,13 +37,12 @@ jobs:
           poetry run tox -e py36
           
       - name: Deploy
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/null'
         env:
           LW_HOST: ${{ secrets.LWHost }}
           LW_USER: ${{ secrets.LWUser }}
           LW_PASSWORD: ${{ secrets.LWPassword }}
           LW_PORT: ${{ secrets.LWPort }}
         run: |
-          ping '${{ secrets.LWHost }}'
           source $HOME/.poetry/env
           poetry run fab deploy
