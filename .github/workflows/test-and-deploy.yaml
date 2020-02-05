@@ -45,4 +45,5 @@ jobs:
           LW_PORT: ${{ secrets.LWPort }}
         run: |
           source $HOME/.poetry/env
+          ls
           poetry run fab deploy
