@@ -24,6 +24,7 @@ jobs:
         run: |
           source $HOME/.poetry/env
           poetry debug
+          ls
           poetry run tox -v
           
       - name: Deploy
