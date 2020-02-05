@@ -44,6 +44,6 @@ jobs:
           LW_PASSWORD: ${{ secrets.LWPassword }}
           LW_PORT: ${{ secrets.LWPort }}
         run: |
+          ping '${{ secrets.LWHost }}'
           source $HOME/.poetry/env
-          ls
           poetry run fab deploy
