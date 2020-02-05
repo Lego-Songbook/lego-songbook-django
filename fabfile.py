@@ -1,6 +1,6 @@
 import os
 
-from fabric import Connection
+from fabric import Connection, task
 
 GIT_REPO = "https://github.com/Lego-Songbook/legoworship.life.git"
 
@@ -12,7 +12,8 @@ PORT = os.environ.get("LW_PORT")
 SOURCE_FOLDER = "/root/sites/legoworship.life"
 
 
-def deploy():
+@task
+def deploy(c):
     """Automate the deployment process."""
     services = ['gunicorn.socket', 'gunicorn.service', 'nginx']
 
