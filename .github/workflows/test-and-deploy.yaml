@@ -3,6 +3,7 @@ on:
   push:
     branches: 
       - master
+      - develop
 
 jobs:
   test:
@@ -24,6 +25,7 @@ jobs:
           poetry run tox
           
       - name: Deploy
+        if: ${{ github.ref }} == 'develop'
         env:
           LW_HOST: ${{ secrets.LWHost }}
           LW_USER: ${{ secrets.LWUser }}
