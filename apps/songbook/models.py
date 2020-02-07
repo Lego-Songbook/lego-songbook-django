@@ -8,6 +8,7 @@ import re
 from datetime import date
 
 from django.db import models
+from django.utils import text, timezone
 
 
 class ServiceType(models.Model):
@@ -184,50 +185,67 @@ class TeamArrangement(models.Model):
         return f"{self.team} Arrangement ({id(self)})"
 
 
-class SongManager(models.Manager):
-    """Make 'name' and 'key' combined unique."""
-
-    def get_by_natural_key(self, name, original_key):
-        return self.get(name=name, original_key=original_key)
+# class SongManager(models.Manager):
+#     """Make 'name' and 'key' combined unique."""
+#
+#     def get_by_natural_key(self, name, original_key):
+#         return self.get(name=name, original_key=original_key)
 
 
 class Song(models.Model):
 
-    name = models.CharField(max_length=100)
-    original_key = models.CharField(max_length=3, null=True, blank=True)
-    # sheet_type = models.CharField(max_length=4, null=True, blank=True)
-    objects = SongManager()
+    title = models.CharField(max_length=100)
+    key = models.CharField(max_length=3, null=True, blank=True)
+    bpm = models.IntegerField(verbose_name="BPM", null=True, blank=True)
+    meter = models.CharField(max_length=20, null=True, blank=True)
+    # objects = SongManager()
 
     def __str__(self):
         return self.name
 
-    def natural_key(self):  # ???
-        return self.name, self.original_key
+    # def natural_key(self):  # ???
+    #     return self.name, self.key
 
 
-class SongArrangement(models.Model):
+def song_attachment_path(instance, filename):
     """
-    A particular arrangement of a song.
+    Helper function for determining the upload path of a file.
+    :param instance: a SongAttachment instance
+    :param filename: the original name of the uploaded file. This value
+        is ignored, since we are using the user specified file name as
+        the real file name.
+    :return:
+    """
+    # file will be uploaded to MEDIA_ROOT/songs/<media_type>/<song_name>
+    song_title_slug = text.slugify(instance.song.title)
+    if instance.file_name is None:
+        file_name = filename
+    else:
+        file_name = instance.file_name
+    return f"songbook/{instance.media_type}/{song_title_slug}/{file_name}"
+
+
+class SongAttachment(models.Model):
+    """
+    The attachments of a song arrangement.
     """
 
-    title = models.CharField(max_length=100, default="Default Arrangement")
-    song = models.ForeignKey(
-        Song, on_delete=models.CASCADE, related_name="song_arrangements"
+    class MediaType(models.TextChoices):
+        AUDIO = "audio", "Audio File"
+        SHEET = "sheet", "Music Sheet"
+
+    song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name="attachments")
+    media_type = models.CharField(max_length=64, choices=MediaType.choices)
+    file_name = models.CharField(max_length=255, blank=True, null=True)
+    main = models.BooleanField(
+        help_text=(
+            "Whether or not that this attachment should be listed as the main"
+            "attachment on a song list view."
+        ),
+        default=True,
     )
-    key = models.CharField(max_length=10, null=True, blank=True)
-    length = models.CharField(max_length=20, null=True, blank=True)
-    bpm = models.IntegerField(verbose_name="BPM", null=True, blank=True)
-    meter = models.CharField(max_length=20, null=True, blank=True)
-    sequence = models.CharField(max_length=255, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.song.name} ({self.title})"
-
-    def save(self, *args, **kwargs):
-        original_key = self.song.original_key
-        if self.key is None and original_key is not None:
-            self.key = original_key
-        super().save(*args, **kwargs)
+    attachment = models.FileField(upload_to=song_attachment_path)
+    created = models.DateTimeField(default=timezone.now(), null=True, blank=True)
 
 
 class Plan(models.Model):
@@ -237,18 +255,19 @@ class Plan(models.Model):
 
     date = models.DateField()
     service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE, null=True)
-    song_arrangements = models.ManyToManyField(SongArrangement, related_name="plans")
-    team_arrangement = models.ManyToManyField(TeamArrangement, related_name="plans")
+    songs = models.ManyToManyField(Song, related_name="plans")
+    team_arrangement = models.ForeignKey(
+        TeamArrangement, on_delete=models.CASCADE, related_name="plans", null=True
+    )
+    notes = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.service_type} ({self.date})"
 
-
-class Setlist(models.Model):
-
-    date = models.DateField()
-    worship_leader = models.CharField(max_length=30)
-    songs = models.ManyToManyField(Song)
-
-    def __str__(self):
-        return str(self.date)
+    @property
+    def upcoming(self):
+        """
+        Determine if the plan is an upcoming plan or not.
+        :return: bool
+        """
+        return date.today() < self.date

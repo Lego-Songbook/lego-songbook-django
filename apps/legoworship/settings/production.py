@@ -7,3 +7,5 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 DEBUG = False
 
 ALLOWED_HOSTS = [".legoworship.life"]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
