@@ -1,17 +1,15 @@
 from django.contrib import admin
-
 from songbook.models import (
     Person,
-    Plan,
     Position,
     PositionAssignment,
     ServiceType,
-    Setlist,
     Song,
-    SongArrangement,
     Team,
     TeamArrangement,
 )
+
+from songbook.models import Plan  # Setlist,; SongArrangement,
 
 
 class PositionInline(admin.TabularInline):
@@ -41,38 +39,38 @@ class PersonAdmin(admin.ModelAdmin):
     all_positions.short_description = "POSITIONS"
 
 
-class PlanArrangementThroughInline(admin.StackedInline):
-    model = Plan.song_arrangements.through
-    extra = 0
+# class PlanSongsThroughInline(admin.StackedInline):
+#     model = Plan.songs.through
+#     extra = 0
+#
+#
+# class PlanTeamArrangementInline(admin.StackedInline):
+#     model = TeamArrangement
+#     extra = 0
+#
+#
+# @admin.register(Plan)
+# class PlanAdmin(admin.ModelAdmin):
+#     inlines = [PlanSongsThroughInline, PlanTeamArrangementInline]
+#     exclude = ("songs", "team_arrangement")
+#     list_display = ("date", "worship_leader", "all_songs")
+#
+#     def worship_leader(self, obj: Plan):
+#         return obj.team_arrangement.get(position__name="带领人").person
+#
+#     def all_songs(self, obj: Plan):
+#         return ", ".join([str(x.song) for x in obj.songs.all()])
+#
+#     all_songs.short_description = "SONGS"
 
 
-class PersonSchedulePlanThroughInline(admin.StackedInline):
-    model = Plan.team_arrangement.through
-    extra = 0
-
-
-@admin.register(Plan)
-class PlanAdmin(admin.ModelAdmin):
-    inlines = [PlanArrangementThroughInline, PersonSchedulePlanThroughInline]
-    exclude = ("song_arrangements", "team_arrangement")
-    list_display = ("date", "worship_leader", "all_songs")
-
-    def worship_leader(self, obj: Plan):
-        return obj.team_arrangement.get(position__name="带领人").person
-
-    def all_songs(self, obj: Plan):
-        return ", ".join([str(x.song) for x in obj.song_arrangements.all()])
-
-    all_songs.short_description = "SONGS"
-
-
-@admin.register(Song)
-class SongAdmin(admin.ModelAdmin):
-    fields = (
-        "name",
-        "original_key",
-    )
-    readonly_fields = ("song_arrangements",)
+# @admin.register(Song)
+# class SongAdmin(admin.ModelAdmin):
+#     fields = (
+#         "name",
+#         "key",
+#     )
+#     # readonly_fields = ("songs",)
 
 
 @admin.register(PositionAssignment)
@@ -91,10 +89,14 @@ class TeamArrangementAdmin(admin.ModelAdmin):
     exclude = ("position_assignments",)
 
 
-admin.site.register(SongArrangement)
-admin.site.register(Setlist)
+# admin.site.register(SongArrangement)
+# admin.site.register(Setlist)
 admin.site.register(ServiceType)
 admin.site.register(Position)
+admin.site.register(Song)
+admin.site.register(Plan)
+
+
 admin.site.site_header = "Lego Worship Administration"
 admin.site.site_title = "Lego Worship Administration"
 admin.site.index_title = "Site Admin"

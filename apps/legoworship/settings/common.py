@@ -108,3 +108,5 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 TEST_RUNNER = "songbook.runner.PytestTestRunner"
+
+MEDIA_URL = "/media/"

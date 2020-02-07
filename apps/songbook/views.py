@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django_tables2 import SingleTableView
 
-from .models import Setlist, Song
+from .models import Song, Plan
 from .tables import SongTable
 
 # Create your views here.
@@ -34,9 +34,9 @@ class SetlistView(generic.ListView):
 
     def get_queryset(self):
         """Return the list of all songs."""
-        return Setlist.objects.order_by("date")
+        return Plan.objects.order_by("date")
 
 
 class SetlistDetailView(generic.DetailView):
-    model = Setlist
+    model = Plan
     template_name = "songbook/setlist_detail.html"

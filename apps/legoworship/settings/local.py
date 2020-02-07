@@ -7,3 +7,5 @@ SECRET_KEY = "5-)c$cap$ey8*=a*ds4rdw7=jrba=u!z$hxc)m3rn16g1eop6h"
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "dev/media")
